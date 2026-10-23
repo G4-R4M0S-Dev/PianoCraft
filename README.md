@@ -4,6 +4,14 @@ Aplicativo Windows independente para aprender e praticar piano com MIDI, partitu
 
 O PianoCraft 0.8.0 oferece biblioteca em lista com importação de MIDI e MusicXML, prática da música inteira, notas em queda, partitura, estudo opcional por mãos e trechos, tarefas com retomada, nove percursos de prática, metrônomo e gravação MIDI com até seis pistas. Inclui três exercícios autorais e um SoundFont básico. É um projeto independente, sem vínculo com o Synthesia.
 
+## Baixar o aplicativo pronto para Windows
+
+**[Baixar PianoCraft 0.8.0 para Windows x64 (ZIP)](https://github.com/G4-R4M0S-Dev/PianoCraft/releases/download/v0.8.0/PianoCraft-0.8.0-windows-x64.zip)**
+
+Extraia todo o ZIP, mantenha os arquivos da pasta `PianoCraft-win32-x64` juntos e execute `PianoCraft.exe`. Feche a versão anterior antes de abrir a nova. O aplicativo pronto dispensa Node.js, npm e Git; os requisitos de desenvolvimento abaixo servem para quem deseja trabalhar no código ou gerar seu próprio pacote.
+
+Veja [as versões publicadas e o checksum do download](https://github.com/G4-R4M0S-Dev/PianoCraft/releases/tag/v0.8.0). O alvo atual é Windows 10 ou superior, x64; o pacote portátil não possui instalador, assinatura digital ou atualização automática.
+
 ## Requisitos
 
 - **Windows 10 ou superior, x64**, para a versão de desktop e o empacotamento atualmente disponíveis; esta publicação foi verificada no Windows 11. macOS, Linux, Windows ARM e Windows de 32 bits não foram validados e não têm scripts de distribuição neste projeto.
