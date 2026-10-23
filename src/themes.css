@@ -1,0 +1,178 @@
+/* Shared palette also used by the canvas and the per-song progress components. */
+:root{
+  --surface:#191e25;--surface-raised:#20262e;--surface-soft:#151c23;--input:#131a22;
+  --button:#20262e;--button-hover:#303945;--success:#a9e5bc;--success-bg:#263e30;
+  --warning:#e5bc82;--danger:#efad9e;--accent-text:#bed9c8;--shadow:#0004;
+  --roll-bg:#10151c;--roll-grid:#26313c;--roll-line:#394956;--roll-text:#92a5b3;
+}
+/* Change foreground and background together; an animated old background briefly
+   makes the new theme's text unreadable, especially with the live transport. */
+html[data-theme] button{transition:none}
+.free-pulse-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.free-pulse-controls label{display:flex;align-items:center;gap:7px}
+#free-beat{display:inline-flex;align-items:center;justify-content:center;min-width:38px;min-height:25px;padding:3px 7px;border:1px solid var(--line);border-radius:5px;background:var(--surface-soft);color:var(--accent-text);font-size:11px;font-weight:600;font-variant-numeric:tabular-nums}
+#free-metronome[aria-pressed=true][data-beat="1"]{background:#a9e5bc;border-color:#d3f6de;color:#173d26;box-shadow:0 0 0 2px #a9e5bc26}
+html[data-theme=light] #free-metronome[aria-pressed=true][data-beat="1"]{background:#276d4d;border-color:#276d4d;color:#fff;box-shadow:0 0 0 2px #276d4d18}
+
+/* The instrument is always in the toolbar. Both status lines have fixed space. */
+main>header{height:84px;min-height:84px;display:grid;grid-template-columns:minmax(125px,auto) minmax(280px,1fr) auto;gap:18px;padding-inline:28px}
+header .breadcrumb{white-space:nowrap;font-size:9px;letter-spacing:1.15px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+header .breadcrumb span{margin-inline:9px}
+header .header-actions{gap:9px}
+header #theme-toggle{padding:3px;width:30px;height:32px;font-size:21px;line-height:1;background:transparent;border-color:transparent}
+header #theme-toggle:hover{background:var(--button-hover)}
+header #instrument-panel{margin:0;padding:6px 10px;display:grid;grid-template-columns:10px minmax(100px,1fr) 29px 110px;grid-template-rows:28px 13px;gap:2px 8px;height:55px;min-height:55px;border-radius:7px;background:var(--surface-soft);border-color:var(--line)}
+header .instrument-state,header .instrument-state>div{display:contents}
+header #instrument-name{display:none}
+header #instrument-dot{grid-column:1;grid-row:1;margin:0;align-self:center}
+header #instrument-panel label{grid-column:2;grid-row:1;min-width:0;display:block}
+header .instrument-input-label{display:none}
+header #instrument-input{height:28px;max-width:none;width:100%;min-width:0;padding:4px 7px;font-size:10px;background:var(--input);color:var(--text);border-color:var(--line)}
+header #instrument-status{grid-column:1/3;grid-row:2;display:block;max-width:none;width:100%;margin:0;font-size:9px;line-height:13px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--muted)}
+header #midi-activity{grid-column:3/5;grid-row:2;height:13px;line-height:13px;max-width:170px;font-size:9px;text-align:right;color:var(--muted)}
+header #midi-activity[data-active=true]{color:var(--success)}
+header #instrument-retry{grid-column:3;grid-row:1;font-size:17px;line-height:20px;width:29px;padding:3px}
+header #instrument-settings{grid-column:4;grid-row:1;padding:5px 8px;font-size:9px;white-space:nowrap}
+#practice-countdown{position:absolute;z-index:6;top:23%;left:50%;transform:translate(-50%,-50%);max-width:calc(100% - 32px);min-width:170px;padding:14px 26px;border:1px solid var(--success);border-radius:12px;background:var(--surface);color:var(--text);text-align:center;font-size:22px;font-weight:600;box-shadow:0 8px 28px var(--shadow);pointer-events:none;font-variant-numeric:tabular-nums}
+#practice-countdown[hidden]{display:none}
+#practice-countdown small{display:block;font-size:11px;font-weight:400;margin-top:6px;color:var(--muted)}
+#practice-countdown .countdown-beats{display:flex;justify-content:center;gap:9px;margin-top:10px}
+#practice-countdown .countdown-beats i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+#practice-countdown .countdown-beats i.active{background:var(--success)}
+.practice-focus #live-notation{flex:1;min-height:0;height:auto;max-height:none}
+.practice-navigation{display:flex;align-items:center;gap:9px;min-width:0}
+.practice-navigation #phrases-host{flex:1;min-width:0}
+.practice-navigation #study-host{flex:none;min-width:0}
+.practice-navigation .study-bar-summary{display:none}
+@media(max-width:1450px){header .local-badge{display:none}}
+@media(max-width:1150px){main>header{padding-inline:22px;gap:12px;grid-template-columns:105px minmax(260px,1fr) auto}header .breadcrumb{font-size:0;letter-spacing:0}header .breadcrumb span{display:none}header .breadcrumb b{font-size:11px;letter-spacing:.2px}}
+@media(max-width:850px){main>header{padding-inline:15px;grid-template-columns:75px minmax(235px,1fr) auto;gap:8px}header #instrument-settings{max-width:83px;overflow:hidden;text-overflow:ellipsis}header #midi-activity{max-width:110px}header #instrument-panel{padding-inline:7px;column-gap:5px;grid-template-columns:10px minmax(80px,1fr) 29px 83px}.header-actions{gap:3px!important}.practice-navigation{flex-wrap:wrap}.practice-navigation #study-host{margin-top:0}}
+
+/* A light workspace, with a white score and unchanged physical piano key colors. */
+:root[data-theme=light]{
+  color-scheme:light;--bg:#f4f6f5;--panel:#fff;--line:#cfd8d3;--text:#202d28;--muted:#596c62;
+  --green:#276d4d;--purple:#7351a9;--surface:#fff;--surface-raised:#edf2ef;--surface-soft:#edf2ef;--input:#fff;
+  --button:#edf2ef;--button-hover:#dfe9e3;--success:#276d4d;--success-bg:#e1efe6;
+  --warning:#946019;--danger:#ad432c;--accent-text:#34694d;--shadow:#284d3820;
+  --roll-bg:#eef4f0;--roll-grid:#d7e2da;--roll-line:#a5bcae;--roll-text:#4e6c5c;
+}
+[data-theme=light] body{background:var(--bg);color:var(--text)}
+[data-theme=light] button{background:var(--button);border-color:var(--line);color:var(--text)}
+[data-theme=light] button:hover{background:var(--button-hover)}
+[data-theme=light] button[aria-pressed=true]{background:#d4e9db;border-color:#72a085;color:#20583b}
+[data-theme=light] button.primary,[data-theme=light] .primary{background:#276d4d;color:#fff;border-color:#276d4d}
+[data-theme=light] .primary:hover{background:#205a3f}
+[data-theme=light] button:focus-visible,[data-theme=light] input:focus-visible,[data-theme=light] select:focus-visible{outline-color:#276d4d}
+[data-theme=light] .sidebar{background:#eaf0ec}
+[data-theme=light] .brand-icon{background:#c4e0cd;color:#20583b}
+[data-theme=light] .brand small,[data-theme=light] .side-label,[data-theme=light] .collection,[data-theme=light] .collection b,[data-theme=light] .sidebar-bottom small{color:var(--muted)}
+[data-theme=light] .nav{background:transparent;color:#586f62}
+[data-theme=light] .nav.active{background:#d0e4d7;color:#245a3d}
+[data-theme=light] .collection{background:transparent}
+[data-theme=light] .sidebar-bottom button{background:transparent}
+[data-theme=light] header .breadcrumb,[data-theme=light] header .breadcrumb span,[data-theme=light] header .breadcrumb b{color:#53685c}
+[data-theme=light] header #theme-toggle,[data-theme=light] header .icon-button{background:transparent;border-color:transparent}
+[data-theme=light] .local-badge{color:#386c4b}
+[data-theme=light] .eyebrow{color:#536d5d}
+[data-theme=light] .hero{background:radial-gradient(ellipse at 78% 20%,#c4dfbd,transparent 65%),#dfeddf;border-color:#aec5b0}
+[data-theme=light] .hero .tag{background:#d2e5cf;color:#3c5c3d;border-color:#a6bda1}
+[data-theme=light] .hero p{color:#48634e}
+[data-theme=light] .hero button{background:transparent;color:#245839}
+[data-theme=light] .hero-art i{background:#53915d;box-shadow:none}
+[data-theme=light] .mini-keys{color:#8cab88}
+[data-theme=light] .orbit{color:#5e9058}
+[data-theme=light] .tabs button{background:transparent;border-bottom-color:#276d4d}
+[data-theme=light] .tabs span{background:#e3ebe5;color:#52695a}
+[data-theme=light] input[type=search]{background:#fff;color:var(--text);border-color:var(--line)}
+[data-theme=light] #sort{background:#fff!important;color:#3e5949!important;border-color:var(--line)!important}
+[data-theme=light] .song-card{background:#fff;box-shadow:0 2px 7px #284d3808}
+[data-theme=light] .favorite-button{background:#17251d80;color:#fff;border:0}
+[data-theme=light] .favorite-button:hover{background:#17251dc0}
+[data-theme=light] .card-footer{color:#426a51}
+[data-theme=light] .card-footer button{background:#e0eee5;color:#265a3b}
+[data-theme=light] .hint,[data-theme=light] .bottom-tools,[data-theme=light] .transport{color:var(--muted)}
+[data-theme=light] .practice-bar select,[data-theme=light] .track select,[data-theme=light] .practice-extras select,[data-theme=light] .practice-extras input{background:#fff;border-color:#bdcec3;color:var(--text)}
+[data-theme=light] .practice-bar label span{color:#345d43}
+[data-theme=light] .piano-stage{background:var(--roll-bg);border-color:#b8cbbf}
+[data-theme=light] #keyboard{border-top-color:#77a58a;background:#bfd0c3}
+[data-theme=light] .piano-key{border-color:#859a8e;background:linear-gradient(#f1f5f2,#fff 80%,#d3ded7);color:#4d6757}
+[data-theme=light] .piano-key:hover{background:#e1f0e7}
+[data-theme=light] .piano-key.black{background:linear-gradient(90deg,#18241e,#3a4d40 70%,#132219);border-color:#0a180f;color:#d1dfd5;box-shadow:0 3px 4px #14331d66}
+[data-theme=light] .piano-key.down,[data-theme=light] .piano-key.active-note{background:linear-gradient(#8ccda5,#c8f0d5);color:#21452e}
+[data-theme=light] .piano-key.black.down,[data-theme=light] .piano-key.black.active-note{background:linear-gradient(#2e7951,#7fbd97);color:#fff}
+[data-theme=light] .piano-key.left-note{background:linear-gradient(#a897d2,#ded2f5)}
+[data-theme=light] .study-memory .piano-key.active-note,[data-theme=light] .study-memory .piano-key.left-note{background:linear-gradient(#f1f5f2,#fff 80%,#d3ded7)}
+[data-theme=light] .study-memory .piano-key.black.active-note,[data-theme=light] .study-memory .piano-key.black.left-note{background:linear-gradient(90deg,#18241e,#3a4d40 70%,#132219)}
+[data-theme=light] #chord{background:#ffffffde;color:#4c6958;box-shadow:0 1px 4px #1e492012}
+[data-theme=light] #score-strip,[data-theme=light] #score-strip b{color:#3d5d49}
+[data-theme=light] #waiting{color:#6c4d92}
+[data-theme=light] #practice-feedback{color:#77558e}
+[data-theme=light] #practice-feedback[data-state=accepted]{color:#276d4d}
+[data-theme=light] #practice-feedback[data-state=rejected]{color:#ad432c}
+[data-theme=light] .transport .play-button{background:#276d4d;color:#fff}
+[data-theme=light] #record.recording{background:#f8ddda;color:#a3312f}
+[data-theme=light] .track-panel summary,[data-theme=light] .track label,[data-theme=light] .practice-extras{color:#516c5c}
+[data-theme=light] .practice-extras{border-color:var(--line)}
+[data-theme=light] dialog{background:#f9fbf9;border-color:#afc4b7;color:var(--text)}
+[data-theme=light] dialog::backdrop{background:#28423660}
+[data-theme=light] dialog label,[data-theme=light] #guide-settings legend{color:#456450}
+[data-theme=light] dialog input,[data-theme=light] dialog select{background:#fff;border-color:#b7cbbd;color:var(--text)}
+[data-theme=light] #guide-settings{border-color:#b7cbbd}
+[data-theme=light] #toast{background:#e4f1e8;color:#275538;border-color:#81ac8e;box-shadow:0 10px 40px #244f3026}
+[data-theme=light] #study-exercise{background:#e3f0e7;border-color:#a3c6ae}
+[data-theme=light] #study-exercise-title{color:#2c6240}
+[data-theme=light] #study-exercise-instruction{color:#4c6d58}
+[data-theme=light] .phrases-panel{background:#eaf1ec}
+[data-theme=light] .phrases-label,[data-theme=light] .phrase-range{color:#45694f}
+[data-theme=light] .phrase-choice{background:#fff;border-color:#b5c9bc;color:#2a4836}
+[data-theme=light] .phrases-eyebrow,[data-theme=light] .phrases-intro,[data-theme=light] .phrase-suggestion-note,[data-theme=light] .phrase-review-help,[data-theme=light] .phrase-dialog-footer>span{color:#526e5e}
+[data-theme=light] .phrases-generator{background:#edf3ee;border-color:#c5d5c9}
+[data-theme=light] .phrases-generator button{background:#d9eade;color:#2c6140;border-color:#9dbea8}
+[data-theme=light] .phrase-timeline{background:#e0e9e3}
+[data-theme=light] .phrase-timeline-segments button{background:#d1e3d7;color:#2a573c;border-color:#a9c5b2}
+[data-theme=light] .phrase-timeline-segments button.selected{background:#a5cdb3;box-shadow:inset 0 0 0 2px #4a805c;color:#1e4930}
+[data-theme=light] .phrase-position{border-color:#985e18}
+[data-theme=light] .phrase-draft-count,[data-theme=light] .phrase-edit-time b,[data-theme=light] .phrase-row-number{color:#385d45}
+[data-theme=light] .phrase-edit-time,[data-theme=light] .phrase-reason,[data-theme=light] .phrase-position-control{color:#526e5c}
+[data-theme=light] .phrase-rows{border-color:#bdcec3}
+[data-theme=light] .phrase-review-row{background:#fff;border-color:#d7e2da}
+[data-theme=light] .phrase-review-row.selected{background:#e0eee5;box-shadow:inset 3px 0 #4d8a61}
+[data-theme=light] .phrases-dialog .phrase-review-row label{color:#4f6b5b}
+[data-theme=light] .phrase-editor-status{color:#306e43}
+[data-theme=light] .phrase-editor-status[data-error=true]{color:#a4432a}
+[data-theme=light] .study-panel,[data-theme=light] .study-dialog .study-subtle{color:#526c5f}
+[data-theme=light] .study-panel .study-open{background:#deeee3;border-color:#9abda6;color:#305f41}
+[data-theme=light] .study-dialog{background:#f7faf7;color:var(--text)}
+[data-theme=light] .study-dialog .study-eyebrow,[data-theme=light] .study-dialog .study-song-title,[data-theme=light] .study-dialog .study-intro,[data-theme=light] .study-dialog label{color:#4c6958}
+[data-theme=light] .study-dialog .study-tab{background:transparent;color:#5c7366}
+[data-theme=light] .study-dialog .study-tab[aria-selected=true]{border-bottom-color:#377a4c;color:#2e6140}
+[data-theme=light] .study-analysis-tools,[data-theme=light] .study-tabs,[data-theme=light] .study-footer,[data-theme=light] .study-review{border-color:#bfd0c3}
+[data-theme=light] .study-empty{border-color:#b9cdbf;color:#536d5e}
+[data-theme=light] .study-dialog .study-form-item{background:#fff;color:#3f5b4a;border-color:#b7cdbf;border-top-color:var(--family-color)}
+[data-theme=light] .study-form-item b,[data-theme=light] .study-family h4{color:#3b6b50}
+[data-theme=light] .study-dialog .study-form-item[aria-pressed=true]{background:#e2eee6;border-color:#759b81;box-shadow:inset 0 0 0 1px #9db6a5}
+[data-theme=light] .study-occurrence,[data-theme=light] .study-family{background:#fff;border-color:#bbcec0;border-left-color:var(--family-color)}
+[data-theme=light] .study-relation{background:#e4eee7;color:#425e4d}
+[data-theme=light] .study-details,[data-theme=light] .study-family>p,[data-theme=light] .study-review summary{color:#42634e}
+[data-theme=light] .study-dialog .study-status{color:#306f46}
+[data-theme=light] .study-dialog .study-status[data-error=true]{color:#a4432a}
+[data-theme=light] .study-save-hint,[data-theme=light] .study-dialog .study-check{color:#4f6e5b}
+[data-theme=light] .study-goal{background:linear-gradient(120deg,#e1eee4,#edf4ef);border-color:#a7c4af}
+[data-theme=light] .study-dialog .study-unsaved{color:#94601d}
+[data-theme=light] .study-pattern-progress-item{background:#fff;border-color:#bdcfc3}
+[data-theme=light] .study-pattern-progress-item strong{color:#346d45}
+[data-theme=light] .study-pattern-progress-item>span{color:#4d6859}
+[data-theme=light] .study-session{background:#fff;border-color:#bbcec0}
+[data-theme=light] .study-session>summary{background:#e6efe8}
+[data-theme=light] .study-session>summary>span,[data-theme=light] .study-session>.study-session-description{color:#486854}
+[data-theme=light] .study-exercise{border-color:#c7d7cb}
+[data-theme=light] .study-exercise-heading>span{color:#587363}
+[data-theme=light] .study-dialog .study-start-exercise,[data-theme=light] .study-dialog .study-study-family{background:#d9ecdf;border-color:#91b79e;color:#275f3c}
+[data-theme=light] .study-start-points,[data-theme=light] .study-contour{background:#edf4ef;border-color:#c5d6ca;color:#476350}
+[data-theme=light] .study-contour figcaption,[data-theme=light] .study-musical-details,[data-theme=light] .study-musical-details>p,[data-theme=light] .study-musical-details summary{color:#4d6d58}
+[data-theme=light] .study-contour polyline{stroke:#397652}
+[data-theme=light] .study-contour circle{fill:#397652}
+[data-theme=light] .study-completion-tag,[data-theme=light] .study-session-tag{background:#deeee3;border-color:#a0c3ac;color:#2c6942}
+[data-theme=light] .study-completion-tag[data-kind=review]{background:#ece5f5;border-color:#c3aedb;color:#6a4b8d}
+
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}

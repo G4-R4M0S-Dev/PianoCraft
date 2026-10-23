@@ -1,0 +1,61 @@
+/* Preparing a task and playing it have different visual priorities. */
+.practice-drawer{position:relative;flex:none;font-size:12px}
+.practice-drawer>summary{list-style:none;cursor:pointer;border:1px solid var(--line);border-radius:7px;padding:9px 14px;background:var(--button,#20262e);color:var(--text)}
+.practice-drawer>summary::-webkit-details-marker{display:none}
+.practice-drawer>summary:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.practice-drawer[open]>summary{border-color:var(--green)}
+.practice-drawer[hidden]{display:none!important}
+.practice-drawer-body{position:fixed;right:30px;top:98px;z-index:170;width:min(650px,calc(100vw - 40px));max-height:calc(100dvh - 120px);overflow:auto;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--text);box-shadow:0 16px 44px var(--shadow,#0005);text-align:left}
+.practice-drawer-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:15px}
+.practice-drawer-heading button{padding:4px 8px}
+.practice-file-tools{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
+#practice-tools .practice-bar{display:flex;flex-wrap:wrap;gap:14px;padding:12px;margin:0 0 12px;height:auto;min-height:0}
+#practice-tools .practice-navigation{display:block;margin:0;height:auto}
+#practice-tools .practice-navigation #phrases-host{height:auto;min-height:36px;margin:0 0 10px}
+#practice-tools .practice-navigation #study-host{height:auto;min-height:32px;margin:0 0 12px}
+#practice-tools #practice-options{display:flex;flex-wrap:wrap;padding:12px;gap:12px;margin:0 0 12px}
+#practice-tools #practice-options label{font-size:11px}
+#practice-tools .track-panel{display:block;margin-top:12px}
+#practice-tools #achievements-host{display:block;margin-top:12px}
+#practice-tools .study-bar-summary{display:none}
+#practice-tools .phrases-panel{flex-wrap:wrap;overflow:visible}
+#practice-tools button,#practice-tools select{font-size:11px}
+#study-exercise{display:none!important}
+#practice-mission{display:flex;align-items:center;justify-content:space-between;gap:16px;flex:none;height:58px;padding:9px 13px;margin:0 0 8px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-variant-numeric:tabular-nums}
+#practice-mission[hidden]{display:none}
+#practice-mission>div{min-width:0}
+#mission-title{display:block;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
+#mission-context{display:block;font-size:11px;color:var(--muted);margin-top:4px}
+#mission-goal{flex:none;max-width:48%;font-size:11px;line-height:1.5;text-align:right;color:var(--green)}
+#practice-mission[data-met=true]{border-color:var(--green)}
+body.studio-screen:not(.free-piano) #studio-view{display:flex;flex-direction:column;height:calc(100dvh - 84px);min-height:560px;padding:12px 26px 10px;overflow:hidden}
+body.studio-screen:not(.free-piano) .studio-heading{flex:none;height:38px;min-height:38px;margin:0 0 10px;gap:15px}
+body.studio-screen:not(.free-piano) .studio-heading .eyebrow{display:none}
+body.studio-screen:not(.free-piano) .studio-heading>div:first-child{min-width:0}
+body.studio-screen:not(.free-piano) .studio-heading h1{font-size:23px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.studio-screen:not(.free-piano) .studio-actions{flex:none;gap:7px}
+body.studio-screen:not(.free-piano) .studio-actions>button{padding:8px 11px;font-size:11px}
+body.studio-screen:not(.free-piano) #score-strip{flex:none;height:24px;min-height:24px;margin:0;padding:2px 2px;font-size:10px}
+body.studio-screen:not(.free-piano) #practice-feedback{flex:none;height:26px;min-height:26px;max-height:26px;margin:0 0 3px;padding:3px 2px;line-height:18px}
+body.studio-screen:not(.free-piano) #sheet{display:flex;flex-direction:column;flex:1 1 46%;min-height:150px;margin:0 0 7px;overflow:hidden}
+body.studio-screen:not(.free-piano) .sheet-tools{flex:none;min-height:26px;padding:4px 8px}
+body.studio-screen:not(.free-piano) #notation{flex:1;min-height:0;height:auto;max-height:none}
+body.studio-screen:not(.free-piano) .piano-stage{display:flex;flex-direction:column;flex:1 1 46%;min-height:165px;overflow:hidden}
+body.studio-screen:not(.free-piano) #roll{flex:1 1 0%;height:0;min-height:55px;width:100%}
+body.studio-screen:not(.free-piano) #keyboard{flex:none;height:100px}
+body.studio-screen:not(.free-piano) .transport{flex:none;min-height:48px;padding:7px 0 0;margin:0;gap:9px}
+body.studio-screen:not(.free-piano) .transport .play-button{width:34px;height:34px}
+body.studio-screen:not(.free-piano) .bottom-tools{display:none}
+body.studio-screen.practice-focus:not(.free-piano) #studio-view{height:100dvh;min-height:0;padding:10px 18px}
+.practice-focus .practice-drawer-body{top:56px;max-height:calc(100dvh - 76px)}
+.guided-practice #set-a,.guided-practice #set-b,.guided-practice #loop{display:none}
+.guided-practice #timeline{pointer-events:none}
+@media(max-width:1100px){
+ body.studio-screen:not(.free-piano) #studio-view{padding-inline:14px}
+ #practice-mission{height:55px;gap:10px;padding-inline:10px}
+ #mission-title{font-size:12px}
+ #mission-goal,#mission-context{font-size:10px}
+ body.studio-screen:not(.free-piano) .studio-heading h1{font-size:20px}
+ .practice-drawer-body{right:18px}
+}
+@media(prefers-reduced-motion:reduce){.practice-drawer>summary{transition:none}}

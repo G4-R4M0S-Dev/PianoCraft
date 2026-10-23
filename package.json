@@ -1,0 +1,41 @@
+{
+  "name": "pianocraft",
+  "productName": "PianoCraft",
+  "version": "0.7.0",
+  "description": "Estúdio independente de prática de piano MIDI",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/G4-R4M0S-Dev/PianoCraft.git"
+  },
+  "homepage": "https://github.com/G4-R4M0S-Dev/PianoCraft#readme",
+  "bugs": {
+    "url": "https://github.com/G4-R4M0S-Dev/PianoCraft/issues"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "postinstall": "install-electron",
+    "start": "electron .",
+    "test": "node --test tests/*.test.js",
+    "test:app": "node scripts/smoke.mjs",
+    "package": "electron-packager . PianoCraft --platform=win32 --arch=x64 --out=dist/v0.7 --asar --overwrite --ignore=\"^/(tools|docs|tests|scripts|test-results|dist|node_modules|.git)(/|$)\" --prune=true --icon=assets/icon.ico",
+    "prepare:assets": "node scripts/prepare-assets.mjs && node scripts/prepare-import.mjs && node scripts/prepare-notation.mjs",
+    "prepackage": "npm run prepare:assets"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "electron": "^45.0.0",
+    "esbuild": "0.28.2",
+    "playwright": "^1.64.1"
+  },
+  "dependencies": {
+    "fflate": "0.8.3",
+    "opensheetmusicdisplay": "2.2.1",
+    "spessasynth_lib": "4.3.14"
+  }
+}

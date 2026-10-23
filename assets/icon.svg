@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="PianoCraft">
+  <defs>
+    <linearGradient id="mint" x1="32" y1="16" x2="224" y2="240" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C4F2D5"/>
+      <stop offset="1" stop-color="#A9E5BC"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="54" fill="url(#mint)"/>
+  <rect x="8.75" y="8.75" width="238.5" height="238.5" rx="53.25" fill="none" stroke="#FFFFFF" stroke-opacity=".32" stroke-width="1.5"/>
+  <g transform="rotate(-6 128 128)">
+    <rect x="44" y="69" width="170" height="134" rx="20" fill="#254C34" fill-opacity=".15"/>
+    <rect x="43" y="61" width="170" height="134" rx="20" fill="#17271E"/>
+    <rect x="54" y="75" width="148" height="108" rx="9" fill="#E6FAEC"/>
+    <path d="M83.6 76V183M113.2 76V183M142.8 76V183M172.4 76V183" fill="none" stroke="#17271E" stroke-width="3"/>
+    <path d="M74.6 74H92.6V135Q92.6 140 87.6 140H79.6Q74.6 140 74.6 135ZM104.2 74H122.2V135Q122.2 140 117.2 140H109.2Q104.2 140 104.2 135ZM163.4 74H181.4V135Q181.4 140 176.4 140H168.4Q163.4 140 163.4 135Z" fill="#17271E"/>
+    <path d="M78.5 80V130M108.1 80V130M167.3 80V130" fill="none" stroke="#486454" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>

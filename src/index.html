@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; media-src 'self' blob:; object-src 'none'"><title>PianoCraft</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="phrases.css"><link rel="stylesheet" href="study.css"><link rel="stylesheet" href="progress.css"><link rel="stylesheet" href="live-score.css"><link rel="stylesheet" href="achievements.css"><link rel="stylesheet" href="completion.css"><link rel="stylesheet" href="song-hub.css"><link rel="stylesheet" href="themes.css"><link rel="stylesheet" href="learning-flow.css"></head>
+<body>
+<aside class="sidebar">
+  <div class="brand"><span class="brand-icon">▥</span><span>PianoCraft<small>SEU ESPAÇO PARA TOCAR</small></span></div>
+  <button class="nav active" data-view="library"><span>▦</span> Biblioteca</button>
+  <button class="nav" data-view="studio"><span>♫</span> Estúdio de prática</button>
+  <button class="nav" data-view="free"><span>♮</span> Piano livre</button>
+  <button class="nav" data-view="progress"><span>↗</span> Meu progresso</button>
+  <div class="side-label">SUA COLEÇÃO</div>
+  <button class="collection" id="all-songs">Todas as músicas <b id="song-count">3</b></button>
+  <button class="collection" id="favorites">♡ Favoritas</button>
+  <div class="sidebar-bottom"><div class="device-dot"></div><span id="midi-status">Teclado do computador<small>MIDI opcional</small></span><button id="settings-button" title="Configurações">⚙</button></div>
+</aside>
+<main>
+<header><div class="breadcrumb">MEU ESTÚDIO <span>/</span> <b id="page-label">Biblioteca</b></div>
+<div id="instrument-panel" aria-label="Conexão do instrumento">
+  <div class="instrument-state"><i id="instrument-dot" class="dot"></i><div><b id="instrument-name">Conectando instrumento…</b><small id="instrument-status" role="status">Procurando entradas MIDI</small></div></div>
+  <label><span class="instrument-input-label">Entrada</span><select id="instrument-input" aria-label="Entrada do teclado físico"><option value="">Teclado do computador</option></select></label>
+  <div id="midi-activity" aria-live="off">Toque no teclado para testar a entrada</div>
+  <button id="instrument-retry" type="button" title="Reconectar instrumento" aria-label="Reconectar instrumento">↻</button><button id="instrument-settings" type="button" title="Configurar instrumento e luzes">Instrumento e luzes</button>
+</div>
+<div class="header-actions"><span class="local-badge">● 100% local</span><button id="theme-toggle" type="button" title="Ativar tema claro" aria-label="Ativar tema claro">☀</button><button id="fullscreen" class="icon-button" title="Tela cheia (F11)">⛶</button></div></header>
+<section id="library-view" class="view">
+  <div class="heading-row"><div><p class="eyebrow">UM POUCO MELHOR, A CADA DIA</p><h1>Sua próxima melodia.</h1><p class="muted">Escolha uma música. Encontre seu ritmo. Faça acontecer.</p></div><button id="import" class="primary">＋ Importar música</button></div>
+  <div class="hero"><div><span class="tag">COMECE POR AQUI</span><h2>O piano, no seu tempo.</h2><p>Pratique uma mão de cada vez e deixe as notas<br>guiarem o caminho. Cada repetição conta.</p><button id="hero-play">Abrir primeiro estudo <span>↗</span></button></div><div class="hero-art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><div class="mini-keys">▥</div><div class="orbit">♪</div></div></div>
+  <div class="library-tools"><div class="tabs"><button class="selected" id="tab-all">Todas as músicas</button><span id="library-total">3 músicas</span></div><input id="search" type="search" placeholder="⌕  Buscar na biblioteca" aria-label="Buscar músicas"></div>
+  <div id="song-grid" class="song-grid"></div><p class="hint">Arraste arquivos MIDI ou MusicXML para importar · Exercícios incluídos são composições próprias do PianoCraft.</p>
+</section>
+<section id="song-view" class="view hidden"><div id="song-hub-host"></div></section>
+<section id="studio-view" class="view hidden">
+  <div class="studio-heading"><div><p class="eyebrow" id="studio-eyebrow">ESTÚDIO DE PRÁTICA</p><h1 id="song-title">Estudo em Dó</h1></div><div class="studio-actions"><button id="back-to-song" type="button">Meu estudo</button><button id="focus-mode" aria-pressed="false" title="Modo foco (F10) · Esc para sair">Modo foco</button><button id="edit-notes">Editar notas</button><button id="sheet-toggle">Partitura</button><button id="export-midi">Exportar MIDI</button></div></div>
+  <div class="practice-bar"><label>Modo<select id="mode"><option value="listen">Ouvir</option><option value="melody">Melodia · aguardar notas</option><option value="rhythm">Ritmo · seguir o tempo</option><option value="recital">Recital · avaliação</option></select></label><label>Mãos<select id="hands"><option value="both">As duas mãos</option><option value="right">Mão direita</option><option value="left">Mão esquerda</option></select></label><label>Andamento <span id="speed-value">100%</span><input id="speed" type="range" min="20" max="150" value="100"></label><label>Transpor<select id="transpose"></select></label><button id="metronome" aria-pressed="false">♩ Metrônomo</button></div>
+  <div class="practice-navigation"><div id="phrases-host"></div><div id="study-host"></div></div>
+  <div id="study-exercise" hidden><div><strong id="study-exercise-title"></strong><span id="study-exercise-instruction"></span></div><button id="study-exercise-exit" type="button">Encerrar exercício</button></div>
+  <div id="score-strip"><span><i class="dot green"></i> <b id="play-state">Pronto para tocar</b></span><span id="waiting">Espaço para iniciar</span><span>Acertos <b id="hits">0</b> <span class="divider">|</span> Precisão <b id="accuracy">—</b></span></div>
+  <div id="sheet"><div class="sheet-tools"><span id="notation-status">Partitura</span><div><button id="sheet-only">Só partitura</button><button id="sheet-zoom-out">−</button><button id="sheet-zoom-in">＋</button></div></div><div id="notation"></div><div id="live-notation" class="hidden"></div></div>
+  <div class="piano-stage"><canvas id="roll" aria-label="Visualização de notas em queda"></canvas><div id="keyboard" role="group" aria-label="Teclado de piano virtual"></div><div id="chord">Toque para descobrir um acorde</div><div id="practice-countdown" hidden role="status" aria-live="polite"></div></div>
+  <div class="transport"><button id="restart" title="Voltar ao início">↤</button><button id="play" class="play-button" title="Reproduzir ou pausar (Espaço)">▶</button><span id="current-time">0:00</span><input id="timeline" type="range" min="0" max="1000" value="0" aria-label="Posição da música"><span id="duration">0:00</span><button id="loop" aria-pressed="false">↻ Loop</button><button id="set-a">A</button><button id="set-b">B</button><span id="loop-range">música inteira</span></div>
+  <div class="bottom-tools"><span id="session-help">Teclas A W S E D F T G Y H U J K · Z/X mudam oitava · Shift sustenta</span><div><button id="record">● Gravar</button><button id="save-recording" disabled>Salvar gravação</button></div></div>
+  <div id="achievements-host" hidden></div>
+  <details class="track-panel"><summary>Pistas e acompanhamento <span id="track-count"></span></summary><div id="tracks"></div></details>
+</section>
+<section id="progress-view" class="view hidden"><p class="eyebrow">CADA NOTA CONTA</p><h1>Seu progresso.</h1><p class="muted">Acompanhe a evolução de cada música e descubra onde concentrar seu próximo estudo.</p><div id="progress-controls" hidden></div><div id="music-progress"></div><div id="progress-summary" class="summary-grid"></div><div id="history"></div></section>
+</main>
+<dialog id="settings"><form method="dialog"><div class="dialog-heading"><h2>Seu instrumento</h2><button value="close" title="Fechar">✕</button></div><label>Perfil<input id="profile" maxlength="40" placeholder="Seu nome"></label><label>Aparência<select id="theme-setting"><option value="dark">Tema escuro</option><option value="light">Tema claro</option><option value="system">Seguir o sistema</option></select></label><label>Entrada MIDI<select id="midi-input"><option value="">Teclado do computador</option></select></label><label>Saída MIDI<select id="midi-output"><option value="">Sintetizador interno</option></select></label><button type="button" id="connect-midi">Procurar dispositivos MIDI</button><p class="hint" id="device-help">Conecte um teclado USB MIDI e procure dispositivos.</p><label class="inline-check"><input id="celebration-sound" type="checkbox" checked> Som breve ao concluir uma prática</label><label>Volume<input id="volume" type="range" min="0" max="100" value="65"></label><label>Teclas visíveis<select id="key-range"><option value="61">61 teclas · Dó 2 a Dó 7</option><option value="88">88 teclas · Lá 0 a Dó 8</option><option value="49">49 teclas · Dó 3 a Dó 7</option></select></label><label>Rótulos<select id="labels"><option value="letters">Letras · C D E</option><option value="solfege">Solfejo · Dó Ré Mi</option><option value="none">Sem rótulos</option></select></label><label>Antecipação visual<input id="lookahead" type="range" min="2" max="8" value="4"></label><button type="button" id="backup">Exportar projeto e progresso</button><p class="hint">PianoCraft 0.7 · Sem cobrança ou ativação. Síntese própria e SoundFont opcional.</p></form></dialog>
+<dialog id="note-editor"><div class="dialog-heading"><h2>Notas e dedilhados</h2><button id="close-editor">✕</button></div><p class="hint">Atribua mãos e dedilhados às notas. As alterações são salvas na biblioteca.</p><div id="note-list"></div><button id="save-edits" class="primary">Salvar alterações</button></dialog>
+<div id="toast" role="status"></div>
+<input id="file-input" type="file" accept=".mid,.midi,.xml,.musicxml,.mxl,.json" multiple hidden>
+<script type="module" src="app.js"></script>
+</body></html>

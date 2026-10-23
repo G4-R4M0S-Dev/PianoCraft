@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-22",
+  "rea": {
+    "version": "6.7.0",
+    "sourceCommit": "4043e71f6cb9c708b07f3f27e15dfc42663e73f3"
+  },
+  "target": {
+    "name": "Synthesia.exe",
+    "digest": {
+      "sha256": "7fbfa73d43dce29e9a4f0322a94500ce9110a711c3cd29bdcdff3ddc634a361f"
+    },
+    "local_path": "C:\\Program Files (x86)\\Synthesia\\Synthesia.exe",
+    "format": "pe",
+    "architecture": "x86_64"
+  },
+  "format": "pe32-plus",
+  "machine": 34404,
+  "resourceCount": 296,
+  "iconGroups": 1,
+  "coverage": {
+    "status": "complete",
+    "examined_entries": 600,
+    "resources": 296
+  },
+  "types": [
+    "DOCS",
+    "GRAPHICS",
+    "SETTINGS",
+    "SONGS",
+    "3",
+    "5",
+    "14",
+    "16"
+  ],
+  "limitations": [
+    "Static PE32/PE32+ type/name/language resource inventory; payloads other than RT_GROUP_ICON remain opaque.",
+    "Icon candidates are resource-table relationships. Language fallback, image decoding and actual shell/window loading are not observed.",
+    "Exact shared byte ranges are retained; non-identical overlapping resource structures or payloads are rejected."
+  ]
+}

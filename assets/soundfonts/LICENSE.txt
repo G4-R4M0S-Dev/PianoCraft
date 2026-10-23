@@ -1,0 +1,4 @@
+PianoCraft Basic SoundFont
+Copyright (c) 2026 PianoCraft contributors
+
+This SoundFont is generated entirely from additive sine waves by scripts/make-soundfont-fixture.mjs. It contains no third-party recordings. It is distributed under the MIT License, as in the root LICENSE file.

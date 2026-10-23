@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-22",
+  "target": {
+    "path": "C:\\Program Files (x86)\\Synthesia\\Synthesia.exe",
+    "sha256": "7fbfa73d43dce29e9a4f0322a94500ce9110a711c3cd29bdcdff3ddc634a361f",
+    "architecture": "x86_64",
+    "imageBase": "0x140000000"
+  },
+  "method": {
+    "reaVersion": "6.7.0",
+    "reaEvidence": ["rea-artifact.json", "rea-pe-resources.json", "summary.json"],
+    "reaInventoryOrigin": "Reused the existing REA evidence for this exact executable SHA-256. This pass did not invoke native REA decompilation or xrefs.",
+    "reaCommandsThisPass": [
+      "rea providers --format json",
+      "rea doctor --format json",
+      "rea inspect-with-objdump --help",
+      "rea inspect-binary-layout --help"
+    ],
+    "reaLimit": "No configured Ghidra, Hopper or IDA analysis provider. REA authenticated the file inventory and PE resources; instruction conclusions below are an independent static follow-up, not REA native decompilation.",
+    "decoder": "Capstone 5.0.7, x86-64, read-only PE sections and runtime-function ranges",
+    "reproduction": "tools/analyze-key-lights.py",
+    "targetExecuted": false,
+    "codeCopiedIntoProduct": false
+  },
+  "profileSelection": {
+    "configurationField": "lightChannel",
+    "configurationValue": -4,
+    "label": "Casiotone LK-S250",
+    "labelAddress": "0x140468cf8",
+    "instructions": [
+      { "address": "0x140338f8e", "bytes": "83 78 58 fc", "operation": "cmp dword ptr [rax + 0x58], -4" },
+      { "address": "0x140338faa", "bytes": "48 8d 15 47 fd 12 00", "operation": "lea rdx, [rip + 0x12fd47] -> Casiotone LK-S250 label" },
+      { "address": "0x140338fd0", "bytes": "c7 40 08 fc ff ff ff", "operation": "mov dword ptr [rax + 8], 0xfffffffc" }
+    ],
+    "readmeLine": 207,
+    "readmeMeaning": "The manufacturer-installed readme calls the LK-S250 option Proprietary 2."
+  },
+  "wireFormat": {
+    "dispatch": { "address": "0x14011fbde", "bytes": "41 83 f9 fc", "operation": "cmp r9d, -4; branch at 0x14011fbe2 to 0x14011fd10" },
+    "keepalive": {
+      "constantAddress": "0x14043c7d8",
+      "constantFileOffset": 4439000,
+      "bytes": [240, 68, 126, 126, 127, 0, 3, 247],
+      "guardAddress": "0x14012040a",
+      "periodAddress": "0x140120472",
+      "periodNanoseconds": 180000000,
+      "periodMilliseconds": 180,
+      "clockConversion": "0x140120390..0x1401203cd converts the performance counter into nanoseconds using 1000000000; 0x140120472 adds 0xABA9500 = 180000000."
+    },
+    "light": {
+      "constantAddress": "0x14043c7e8",
+      "constantFileOffset": 4439016,
+      "template": [240, 68, 126, 126, 127, 2, 0, 0, 0, 247],
+      "noteIndex": 7,
+      "flagIndex": 8,
+      "on": 1,
+      "off": 0,
+      "minimumMidiNote": 21,
+      "maximumMidiNote": 108,
+      "noteStoreAddress": "0x14011fda3",
+      "flagStoreAddress": "0x14011fdb9",
+      "lengthStoreAddress": "0x14011fdc0",
+      "messageBuilderAddress": "0x14011fde7"
+    }
+  },
+  "limits": [
+    "The binary proves the selected profile and generated wire constants, not the physical model or observed LED state.",
+    "Only guide messages were recovered. No undocumented reset, mode-exit or other SysEx command was inferred.",
+    "The new implementation expresses the recovered message format independently. It does not reproduce the original program's code, assets or licensing."
+  ]
+}
