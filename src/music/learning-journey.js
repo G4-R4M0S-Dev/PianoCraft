@@ -109,7 +109,7 @@ function taskFrom(ctx, structure, options = {}) {
   const mode = MODES.includes(options.mode) ? options.mode : 'melody';
   const hands = HANDS.includes(options.hands) ? options.hands : available[0];
   if (!hands || !notesIn(ctx, { ...range, hands }).length) return null;
-  const speed = mode === 'recital' ? 1 : finite(options.speed) && options.speed >= .4 && options.speed <= 1 ? rounded(options.speed) : defaultSpeed(mode);
+  const speed = mode === 'recital' ? 1 : finite(options.speed) && options.speed >= .2 && options.speed <= 1.5 ? rounded(options.speed) : defaultSpeed(mode);
   const phraseId = text(options.phraseId, text(unit.id), 80), patternId = text(options.patternId, text(unit.patternId), 80);
   const phrase = list(structure.phrases).find(item => item.id === phraseId) ?? unit;
   const occurrences = occurrencesFor(structure, { ...phrase, patternId });
@@ -144,7 +144,7 @@ function normalizeState(input, ctx, structure) {
   const rawTask = input.task;
   if (rawTask && rawTask.contentKey && rawTask.contentKey !== ctx.contentKey) return empty;
   const task = rawTask && finite(rawTask.start) && finite(rawTask.end) && rawTask.start >= 0 && rawTask.end > rawTask.start && rawTask.end <= ctx.duration + EPS
-    && MODES.includes(rawTask.mode) && HANDS.includes(rawTask.hands) && finite(rawTask.speed) && rawTask.speed >= .4 && rawTask.speed <= 1
+    && MODES.includes(rawTask.mode) && HANDS.includes(rawTask.hands) && finite(rawTask.speed) && rawTask.speed >= .2 && rawTask.speed <= 1.5
     && (rawTask.mode !== 'recital' || rawTask.speed === 1) ? taskFrom(ctx, structure, rawTask) : null;
   if (rawTask && !task) return empty;
   empty.task = task ?? empty.task;
@@ -237,23 +237,24 @@ export function buildLearningJourney(song, { profile = 'Meu perfil', history = [
     nextActionLabel: task ? `${resumable ? 'Continuar' : 'Começar'} · ${MODE_LABELS[task.mode]} a ${Math.round(task.speed * 100)}%` : 'Escolha uma música com notas' };
 }
 
-function nextTaskFor(ctx, structure, task) {
+function nextTaskFor(ctx, structure, task, preferredSpeed) {
   const units = unitsFor(ctx, structure), available = handsIn(ctx, task);
-  if (task.mode !== 'recital' && task.speed < 1 - EPS) return { task: taskFrom(ctx, structure, { ...task, title: undefined, instruction: undefined, reason: undefined, speed: Math.min(1, rounded(task.speed + .1)) }), action: `Praticar a ${Math.round(Math.min(1, rounded(task.speed + .1)) * 100)}%`, finished: false };
+  const nextSpeed = mode => mode === 'recital' ? 1 : preferredSpeed ?? defaultSpeed(mode);
+  if (preferredSpeed === undefined && task.mode !== 'recital' && task.speed < 1 - EPS) return { task: taskFrom(ctx, structure, { ...task, title: undefined, instruction: undefined, reason: undefined, speed: Math.min(1, rounded(task.speed + .1)) }), action: `Praticar a ${Math.round(Math.min(1, rounded(task.speed + .1)) * 100)}%`, finished: false };
   if (task.mode === 'melody') {
     const nextHand = available[available.indexOf(task.hands) + 1];
-    if (nextHand) return { task: taskFrom(ctx, structure, { ...task, title: undefined, instruction: undefined, reason: undefined, hands: nextHand, speed: .6 }), action: `Praticar com ${HAND_LABELS[nextHand]}`, finished: false };
+    if (nextHand) return { task: taskFrom(ctx, structure, { ...task, title: undefined, instruction: undefined, reason: undefined, hands: nextHand, speed: nextSpeed(task.mode) }), action: `Praticar com ${HAND_LABELS[nextHand]}`, finished: false };
   }
   let index = units.findIndex(unit => unit.id === task.phraseId && unit.start <= task.start + EPS && unit.end >= task.end - EPS);
   if (index < 0) index = units.findIndex(unit => unit.start <= task.start + EPS && unit.end >= task.end - EPS);
   const next = index >= 0 ? units[index + 1] : units.find(unit => unit.start >= task.end - EPS);
   if (next) {
     const hands = task.mode === 'melody' ? handsIn(ctx, next)[0] : handsIn(ctx, next).at(-1);
-    const nextTask = taskFrom(ctx, structure, { ...next, phraseId: next.id, mode: task.mode, hands, speed: defaultSpeed(task.mode) });
+    const nextTask = taskFrom(ctx, structure, { ...next, phraseId: next.id, mode: task.mode, hands, speed: nextSpeed(task.mode) });
     return { task: nextTask, action: nextTask?.patternId === task.patternId ? 'Praticar a reaparição do padrão' : 'Praticar o próximo trecho', finished: false };
   }
   const nextMode = MODES[MODES.indexOf(task.mode) + 1], first = units[0];
-  if (nextMode && first) return { task: taskFrom(ctx, structure, { ...first, phraseId: first.id, mode: nextMode, hands: handsIn(ctx, first).at(-1), speed: defaultSpeed(nextMode) }), action: nextMode === 'rhythm' ? 'Experimentar o Ritmo a 90%' : 'Experimentar o Recital', finished: false };
+  if (nextMode && first) return { task: taskFrom(ctx, structure, { ...first, phraseId: first.id, mode: nextMode, hands: handsIn(ctx, first).at(-1), speed: nextSpeed(nextMode) }), action: nextMode === 'rhythm' ? `Experimentar o Ritmo a ${Math.round(nextSpeed(nextMode)*100)}%` : 'Experimentar o Recital', finished: false };
   return { task: taskFrom(ctx, structure, { ...task, title: 'Revisar a música em diferentes pontos', instruction: 'Comece diretamente neste trecho, sem tocar os anteriores. Depois escolha outra frase para verificar sua memória e seu ritmo.', reason: 'O ciclo sugerido foi percorrido. Isso não substitui as avaliações de cada percurso e mão.' }), action: 'Revisar este ponto de partida', finished: true };
 }
 
@@ -277,7 +278,8 @@ function validation(ctx, task, attempt) {
 
 /** Only complete, comparable performances change a mission's consecutive streak.
  * The next task is a suggestion: the caller starts it only after user action. */
-export function evaluateJourneyAttempt(song, input, attempt, { profile = 'Meu perfil' } = {}) {
+export function evaluateJourneyAttempt(song, input, attempt, { profile = 'Meu perfil', preferredSpeed } = {}) {
+  if (!finite(preferredSpeed) || preferredSpeed < .2 || preferredSpeed > 1.5) preferredSpeed = undefined;
   const ctx = context(song, profile), structure = structureFor(ctx), state = normalizeState(input, ctx, structure), task = state.task;
   const sourceMatches = validState(input, ctx) && input.task?.id === task?.id;
   const outcome = sourceMatches ? validation(ctx, task, attempt) : { qualified: false, reason: 'O estado da missão mudou. Escolha o desafio atual antes de avaliar outra tentativa.' };
@@ -296,7 +298,7 @@ export function evaluateJourneyAttempt(song, input, attempt, { profile = 'Meu pe
   Object.assign(result, { streak, qualified: true, changed: true, reason: outcome.reason,
     summary: streak ? `${streak} de ${STREAK} execuções consecutivas com pelo menos ${TARGET}% de precisão.` : `Precisão de ${Math.round(outcome.accuracy)}%. A sequência recomeça; a meta continua sendo ${STREAK} execuções consecutivas com pelo menos ${TARGET}%.` });
   if (streak >= STREAK) {
-    const next = nextTaskFor(ctx, structure, task);
+    const next = nextTaskFor(ctx, structure, task, preferredSpeed);
     state.passed = [...new Set([...state.passed, task.id])].slice(-4096);
     state.task = next.task; state.streak = 0; state.completed = next.finished; state.lastOutcome = 'goal';
     if (state.task) state.task.streak = 0;
@@ -304,12 +306,12 @@ export function evaluateJourneyAttempt(song, input, attempt, { profile = 'Meu pe
       summary: next.finished ? 'Ciclo de estudo percorrido. Continue revisando os pontos de partida e os percursos de cada mão.' : `Meta atingida: ${STREAK} execuções consecutivas com pelo menos ${TARGET}% de precisão. O próximo desafio está pronto.` });
   } else if (outcome.accuracy < 70) {
     const mode = task.mode === 'recital' ? 'rhythm' : task.mode;
-    const speed = task.mode === 'recital' ? .9 : Math.max(mode === 'melody' ? .4 : .6, rounded(task.speed - .1));
+    const speed = preferredSpeed ?? (task.mode === 'recital' ? .9 : Math.min(task.speed, Math.max(mode === 'melody' ? .4 : .6, rounded(task.speed - .1))));
     const nextTask = taskFrom(ctx, structure, { ...task, mode, speed, title: undefined, instruction: undefined,
-      reason: 'A última execução teve menos de 70% de precisão. Reduza o andamento para preparar notas, acordes e durações antes de tentar de novo.' });
+      reason: preferredSpeed === undefined ? 'A última execução teve menos de 70% de precisão. Reduza o andamento para preparar notas, acordes e durações antes de tentar de novo.' : 'Revise notas, acordes e durações. Sua velocidade escolhida foi mantida; você pode ajustá-la na barra acima.' });
     state.lastOutcome = 'review';
-    Object.assign(result, { nextTask, actionLabel: task.mode === 'recital' ? 'Revisar no Ritmo a 90%' : speed < task.speed ? `Revisar a ${Math.round(speed * 100)}%` : 'Repetir devagar',
-      summary: `${Math.round(outcome.accuracy)}% de precisão. A sugestão é revisar com calma; a velocidade só muda quando você escolher o próximo desafio.` });
+    Object.assign(result, { nextTask, actionLabel: preferredSpeed !== undefined ? `Revisar a ${Math.round(speed * 100)}%` : task.mode === 'recital' ? 'Revisar no Ritmo a 90%' : speed < task.speed ? `Revisar a ${Math.round(speed * 100)}%` : 'Repetir devagar',
+      summary: preferredSpeed !== undefined ? `${Math.round(outcome.accuracy)}% de precisão. Revise este trecho; sua velocidade escolhida foi mantida.` : `${Math.round(outcome.accuracy)}% de precisão. A sugestão é revisar com calma; a velocidade só muda quando você escolher o próximo desafio.` });
   }
   return result;
 }

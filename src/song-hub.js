@@ -23,13 +23,13 @@ function portion(task) {
   return 'Música inteira';
 }
 
-/** A song has one recommended action. Choosing a path only asks the host to
- * adapt that action; this view never awards points or starts playback itself. */
+/** Whole-song practice is the main action. Guided excerpts are an explicit
+ * alternative; this view never awards points or starts playback itself. */
 export class SongHub {
-  constructor({ host, onStart = () => {}, onPath = () => {}, onReview = () => {}, onManual = () => {}, onError = () => {} }) {
+  constructor({ host, onWholeSong = () => {}, onStart = () => {}, onPath = () => {}, onReview = () => {}, onManual = () => {}, onError = () => {} }) {
     if (!host) throw new Error('A página da música precisa de um contêiner.');
     this.host = host;
-    this.actions = { onStart, onPath, onReview, onManual };
+    this.actions = { onWholeSong, onStart, onPath, onReview, onManual };
     this.onError = onError;
     this.host.classList.add('song-hub-host');
   }
@@ -46,7 +46,7 @@ export class SongHub {
     return button;
   }
 
-  setData(song, journey = {}, { achievements = {}, profile = 'Meu perfil' } = {}) {
+  setData(song, journey = {}, { achievements = {}, profile = 'Meu perfil', practiceSpeed = 1 } = {}) {
     const sameContext = this.song?.id === song?.id && this.profile === profile;
     const active = this.host.contains(document.activeElement) ? document.activeElement : null;
     const focusedPath = active?.dataset.path, focusedAction = active?.dataset.hubAction;
@@ -63,6 +63,19 @@ export class SongHub {
     const tools = node('div', 'song-hub-tools');
     tools.append(this.button('Estrutura e padrões', 'onReview', { songId: song.id }), this.button('Estúdio completo', 'onManual', { songId: song.id }));
     header.append(title, tools); root.append(header);
+
+    const wholeSong = node('section', 'song-hub-whole');
+    wholeSong.setAttribute('aria-label', 'Praticar a música inteira');
+    const wholeDescription = node('div', 'song-hub-whole-description');
+    wholeDescription.append(node('h2', '', 'Música inteira'), node('p', 'song-hub-whole-note', 'Do início ao fim · sem repetição automática'));
+    const savedSpeed = finite(practiceSpeed) && practiceSpeed > 0 ? practiceSpeed : 1;
+    const wholeMeta = node('div', 'song-hub-whole-meta');
+    wholeMeta.append(node('span', 'song-hub-saved-speed', `Velocidade salva: ${Math.round(savedSpeed * 100)}%`));
+    const duration = clock(song.duration);
+    if (duration) wholeMeta.append(node('span', '', `Duração: ${duration}`));
+    wholeDescription.append(wholeMeta);
+    wholeSong.append(wholeDescription, this.button('Praticar música inteira', 'onWholeSong', { songId: song.id }, 'primary song-hub-whole-start'));
+    root.append(wholeSong);
 
     const progress = this.journey.progress || {};
     const value = bounded(progress.value);
@@ -86,14 +99,14 @@ export class SongHub {
 
     const task = this.journey.task;
     const taskSection = node('section', 'song-hub-task');
-    taskSection.setAttribute('aria-label', 'Seu próximo passo');
+    taskSection.setAttribute('aria-label', 'Estudo por trechos');
     const taskContent = node('div', 'song-hub-task-content');
-    taskContent.append(node('p', 'song-hub-eyebrow', this.journey.resumable ? 'Continuar meu estudo' : 'Seu próximo passo'));
+    taskContent.append(node('p', 'song-hub-eyebrow', 'Estudo por trechos · opcional'));
     taskContent.append(node('h2', '', task?.title || 'Prepare esta música para estudar'));
     if (task) {
       const metadata = node('div', 'song-hub-task-meta');
       const speed = finite(task.speed) ? `${Math.round(task.speed * 100)}% do andamento` : null;
-      for (const text of [handNames[task.hands], modeNames[task.mode], speed, portion(task)].filter(Boolean)) metadata.append(node('span', '', text));
+      for (const text of [portion(task), handNames[task.hands], modeNames[task.mode], speed].filter(Boolean)) metadata.append(node('span', '', text));
       taskContent.append(metadata);
       const required = Math.max(1, Math.min(20, Math.floor(task.targetStreak || this.journey.requiredStreak || 3)));
       const target = Math.round(bounded(task.targetAccuracy) ?? 90);
@@ -114,18 +127,22 @@ export class SongHub {
       taskContent.append(goal);
     } else taskContent.append(node('p', 'song-hub-instruction', 'Confira as notas e a atribuição das mãos no estúdio para começar sua prática.'));
     const taskAction = node('div', 'song-hub-task-action');
-    if (task) taskAction.append(this.button(this.journey.resumable ? 'Continuar' : 'Começar', 'onStart', { songId: song.id, task }, 'primary song-hub-start'));
-    else taskAction.append(this.button('Abrir o estúdio', 'onManual', { songId: song.id }, 'primary song-hub-start'));
-    taskAction.append(node('small', '', task ? 'Um trecho de cada vez' : 'Configurar a música'));
+    if (task) taskAction.append(this.button(this.journey.resumable ? 'Continuar este trecho' : 'Estudar este trecho', 'onStart', { songId: song.id, task }, 'song-hub-start'));
+    else taskAction.append(this.button('Abrir o estúdio', 'onManual', { songId: song.id }, 'song-hub-start'));
+    taskAction.append(node('small', '', task ? 'Repete só o intervalo indicado' : 'Configurar os trechos'));
     taskSection.append(taskContent, taskAction); root.append(taskSection);
 
     const paths = renderAchievements(achievements, {
       songId: song.id,
-      title: 'Escolher outro desafio',
+      title: 'Praticar a música inteira · escolha modo e mãos',
       onPractice: payload => this.dispatch('onPath', payload),
       onError: this.onError,
     });
     paths.classList.add('song-hub-paths');
+    for (const button of paths.querySelectorAll('[data-path]')) {
+      button.setAttribute('aria-label', `Praticar a música inteira. ${button.getAttribute('aria-label') || ''}`);
+      if (!button.disabled) button.title = 'Praticar a música inteira neste modo e com esta mão.';
+    }
     const selected = [...paths.querySelectorAll('[data-path]')].find(button => button.dataset.path === `${task?.mode}:${task?.hands}`);
     if (selected) { selected.classList.add('song-hub-selected-path'); selected.setAttribute('aria-current', 'step'); }
     root.append(paths);

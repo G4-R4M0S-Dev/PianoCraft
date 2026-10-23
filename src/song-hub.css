@@ -3,3 +3,49 @@
 @media(max-width:760px){.song-hub-header{align-items:flex-start;flex-direction:column;gap:10px}.song-hub-tools button{font-size:10px}.song-hub-task{grid-template-columns:1fr;padding:17px;gap:14px}.song-hub-task-action{align-items:flex-start}.song-hub-task-action small{max-width:none}.song-hub-start{width:100%}.song-hub-progress-label{gap:7px;flex-wrap:wrap}.song-hub-paths .achievement-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.song-hub-paths .achievement-paths{grid-template-columns:1fr}.song-hub-paths .achievement-path-both{grid-column:auto;min-height:87px;display:flex}.song-hub-paths .achievement-path-both .achievement-value{align-self:auto;margin-bottom:5px}.song-hub-paths .achievement-column-heading{min-height:51px}.song-hub-paths .achievement-column-heading h4{font-size:11px}.song-hub-paths .achievement-column-heading p{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.song-hub *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 .song-hub-reason{font-size:10px;line-height:1.6;color:var(--warning,var(--accent-text,var(--green)));margin:0 0 9px;max-width:720px}
+
+/* The full song leads; excerpt repetition is a compact, secondary choice. */
+.song-hub-header{margin-bottom:13px}
+.song-hub-whole{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 18px;margin-bottom:13px;background:var(--success-bg,var(--panel));border:1px solid var(--accent-text,var(--green));border-radius:9px;min-width:0}
+.song-hub-whole-description{min-width:0}
+.song-hub-whole h2{font-size:19px;line-height:1.3;font-weight:600;margin:0 0 3px}
+.song-hub-whole-note{font-size:11px;line-height:1.5;color:var(--text);margin:0 0 5px;overflow-wrap:anywhere}
+.song-hub-whole-meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:10px;line-height:1.5;color:var(--muted)}
+.song-hub-saved-speed{font-weight:600;color:var(--accent-text,var(--green))}
+.song-hub-whole-start{padding:12px 18px;font-size:13px;line-height:1.4;flex:none}
+.song-hub button:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.song-hub-progress{margin-bottom:13px}
+.song-hub-task{gap:14px;padding:12px 15px;margin-bottom:13px;background:var(--panel);border-color:var(--line);border-radius:8px}
+.song-hub-task .song-hub-eyebrow{color:var(--muted);font-size:10px;letter-spacing:.4px;margin-bottom:4px}
+.song-hub-task h2{font-size:16px;line-height:1.35;margin-bottom:5px}
+.song-hub-task-meta{color:var(--muted);margin-bottom:5px}
+.song-hub-task-meta>span:first-child{font-weight:600;color:var(--text)}
+.song-hub-instruction{font-size:11px;line-height:1.5;margin-bottom:5px}
+.song-hub-pattern,.song-hub-reason{font-size:10px;line-height:1.5;margin-bottom:5px}
+.song-hub-task-action{min-width:151px;gap:5px}
+.song-hub-start{min-width:151px;padding:9px 12px;font-size:11px;line-height:1.4}
+.song-hub-task-action small{max-width:160px}
+.song-hub .song-hub-paths .achievements-heading{margin-bottom:9px}
+.song-hub-paths .achievement-column-heading{min-height:32px;margin-bottom:5px}
+.song-hub-paths .achievement-path{min-height:75px;padding:8px 9px 10px}
+.song-hub-paths .achievement-value{margin-bottom:3px}
+.song-hub-paths .achievement-value strong{font-size:20px}
+.song-hub-paths .achievement-path-both{min-height:51px}
+.song-hub-structure-note{margin-top:7px}
+@media(max-width:1150px){
+  .song-hub-whole{padding:12px 14px;gap:12px}
+  .song-hub-whole-start{padding:11px 13px;font-size:12px}
+  .song-hub-task{padding:10px 13px;gap:12px}
+  .song-hub-task h2{font-size:15px}
+  .song-hub-paths .achievement-path{min-height:73px;padding:7px 8px 10px}
+  .song-hub-paths .achievement-path-both{min-height:49px}
+}
+@media(max-width:760px){
+  .song-hub-whole{align-items:flex-start;flex-direction:column;gap:10px}
+  .song-hub-whole-start{width:100%}
+  .song-hub-task{grid-template-columns:1fr;gap:10px;padding:12px}
+  .song-hub-task-action{align-items:stretch;min-width:0}
+  .song-hub-task-action small{max-width:none}
+  .song-hub-paths .achievement-path-both{min-height:73px}
+  .song-hub-paths .achievement-column-heading{min-height:51px}
+}

@@ -86,10 +86,12 @@ header #instrument-settings{grid-column:4;grid-row:1;padding:5px 8px;font-size:9
 [data-theme=light] input[type=search]{background:#fff;color:var(--text);border-color:var(--line)}
 [data-theme=light] #sort{background:#fff!important;color:#3e5949!important;border-color:var(--line)!important}
 [data-theme=light] .song-card{background:#fff;box-shadow:0 2px 7px #284d3808}
-[data-theme=light] .favorite-button{background:#17251d80;color:#fff;border:0}
-[data-theme=light] .favorite-button:hover{background:#17251dc0}
+[data-theme=light] .song-card .favorite-button{background:transparent;color:var(--muted);border-color:transparent}
+[data-theme=light] .song-card .favorite-button:hover{background:var(--button-hover);color:var(--text)}
+[data-theme=light] .song-card .favorite-button[aria-pressed=true]{background:var(--success-bg);color:var(--success)}
 [data-theme=light] .card-footer{color:#426a51}
 [data-theme=light] .card-footer button{background:#e0eee5;color:#265a3b}
+[data-theme=light] .card-footer .open-song{background:var(--green);color:#fff}
 [data-theme=light] .hint,[data-theme=light] .bottom-tools,[data-theme=light] .transport{color:var(--muted)}
 [data-theme=light] .practice-bar select,[data-theme=light] .track select,[data-theme=light] .practice-extras select,[data-theme=light] .practice-extras input{background:#fff;border-color:#bdcec3;color:var(--text)}
 [data-theme=light] .practice-bar label span{color:#345d43}

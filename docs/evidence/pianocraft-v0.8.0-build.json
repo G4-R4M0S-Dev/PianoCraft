@@ -1,0 +1,18 @@
+{
+  "name": "PianoCraft",
+  "version": "0.8.0",
+  "platform": "win32-x64",
+  "builtAt": "2026-10-23T18:09:42.053Z",
+  "files": [
+    {
+      "path": "PianoCraft.exe",
+      "bytes": 249805824,
+      "sha256": "4cbd118b57611dd432507f10a22016753f28f4babee1f262d909cdf0b892f2d0"
+    },
+    {
+      "path": "resources/app.asar",
+      "bytes": 3313001,
+      "sha256": "7178ed236a81bcd7d0f110b7a18c640b7d10eca15d540c3b5448c65bcfb4f844"
+    }
+  ]
+}

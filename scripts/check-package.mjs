@@ -7,7 +7,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const executablePath = resolve(process.argv[2] || join(root, 'dist/v0.7/PianoCraft-win32-x64/PianoCraft.exe'));
+const executablePath = resolve(process.argv[2] || join(root, 'dist/v0.8/PianoCraft-win32-x64/PianoCraft.exe'));
 let applicationRoot = join(dirname(executablePath), 'resources', 'app');
 const output = join(root, 'test-results');
 await mkdir(output, { recursive: true });
@@ -70,6 +70,7 @@ try {
   await page.locator('.open-song').first().click();
   await page.locator('[data-hub-action="onManual"]').click();
   await page.locator('#close-practice-tools').click();
+  await page.locator('#mode').selectOption('listen');
   await page.locator('#play').click();
   await page.waitForFunction(() => document.querySelector('#current-time').textContent !== '0:00');
   await page.locator('#play').click();

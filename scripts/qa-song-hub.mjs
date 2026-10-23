@@ -35,7 +35,7 @@ try {
   assert.match(await hub.locator('.song-hub-goal').getAttribute('aria-label'), /3 execuções seguidas com 90%.*1 de 3 concluídas/);
   assert.equal(await hub.locator('.song-hub-streak .complete').count(), 1);
   assert.match(await hub.locator('.song-hub-pattern').textContent(), /4 vezes/);
-  assert.equal(await hub.locator('.song-hub-start').textContent(), 'Continuar');
+  assert.equal(await hub.locator('.song-hub-start').textContent(), 'Continuar este trecho');
   assert.equal(await hub.locator('[aria-current="step"]').getAttribute('data-path'), 'melody:right');
   assert.equal(await hub.locator('[data-path="recital:left"]').isDisabled(), true);
   assert.equal(await hub.locator('[data-path="melody:left"] .achievement-value strong').textContent(), '0');

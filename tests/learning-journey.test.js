@@ -5,6 +5,24 @@ import { handOf } from '../src/music/practice.js';
 import { buildLearningJourney, normalizeJourneyState, createJourneyTask, evaluateJourneyAttempt, learningProgress } from '../src/music/learning-journey.js';
 
 const profile = 'Ana';
+test('a chosen speed below 100% advances to a different challenge instead of restarting the same mission', () => {
+  const song=fixture();let state=withTask(song,{speed:.7,hands:'right'}),result;
+  const original=state.task.id;
+  for(let index=0;index<3;index++){
+    result=evaluateJourneyAttempt(song,state,attempt(song,state,{id:`fixed-${index}`,attemptId:`fixed-${index}`}),{profile,preferredSpeed:.7});state=result.state;
+  }
+  assert.equal(result.goalMet,true);assert.equal(result.nextTask.speed,.7);
+  assert.notEqual(result.nextTask.id,original);assert.equal(result.nextTask.hands,'left');
+});
+test('explicit slider speeds remain valid in a saved guided task across the full supported range', () => {
+  const song=fixture();
+  for(const speed of [.2,.3,1,1.25,1.5]){
+    const state=withTask(song,{speed});
+    assert.equal(state.task.speed,speed);
+    assert.equal(buildLearningJourney(song,{profile,state:{...state,started:true}}).task.speed,speed);
+  }
+  assert.equal(withTask(song,{mode:'recital',speed:1.25}).task.speed,1);
+});
 function fixture() {
   return { id: 'piece', title: 'Padrões de estudo', tempo: 120, duration: 16,
     notes: Array.from({ length: 16 }, (_, time) => ({ id: `n${time}`, time, midi: time % 2 ? 48 + time % 4 : 64 + time % 4, duration: .5, track: 0 })),

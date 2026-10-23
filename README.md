@@ -2,7 +2,7 @@
 
 Aplicativo Windows independente para aprender e praticar piano com MIDI, partitura e acompanhamento do progresso. Interface em português, código aberto sob [licença MIT](LICENSE), sem cobrança, conta ou ativação. Depois de preparado ou empacotado, funciona offline.
 
-O PianoCraft oferece biblioteca com importação de MIDI e MusicXML, notas em queda, partitura, estudo por mãos e trechos, tarefas com retomada, nove percursos de prática, metrônomo e gravação MIDI com até seis pistas. Inclui três exercícios autorais e um SoundFont básico. É um projeto independente, sem vínculo com o Synthesia.
+O PianoCraft 0.8.0 oferece biblioteca em lista com importação de MIDI e MusicXML, prática da música inteira, notas em queda, partitura, estudo opcional por mãos e trechos, tarefas com retomada, nove percursos de prática, metrônomo e gravação MIDI com até seis pistas. Inclui três exercícios autorais e um SoundFont básico. É um projeto independente, sem vínculo com o Synthesia.
 
 ## Requisitos
 
@@ -44,13 +44,13 @@ npm run package
 O comando executa `prepare:assets` automaticamente e gera:
 
 ```text
-dist/v0.7/PianoCraft-win32-x64/
+dist/v0.8/PianoCraft-win32-x64/
 └── PianoCraft.exe   (junto dos demais arquivos do Electron)
 ```
 
-Execute **`dist/v0.7/PianoCraft-win32-x64/PianoCraft.exe`**. Para compartilhar, compacte ou copie **a pasta inteira**, mantendo seus arquivos juntos. O computador de destino não precisa de Node.js, npm ou Git. Feche a versão anterior antes de abrir a nova.
+Execute **`dist/v0.8/PianoCraft-win32-x64/PianoCraft.exe`**. Para compartilhar, compacte ou copie **a pasta inteira**, mantendo seus arquivos juntos. O computador de destino não precisa de Node.js, npm ou Git. Feche a versão anterior antes de abrir a nova.
 
-O script atual gera uma pasta portátil x64, sem instalador, assinatura digital ou atualização automática. `npm run package` substitui a saída anterior em `dist/v0.7`; mantenha qualquer cópia que deseje preservar fora dessa pasta. O código publicado no Git não inclui `dist/`, `node_modules/`, ferramentas de análise locais ou resultados de testes: a pasta com o executável só existe depois da geração local. O campo `private` no `package.json` impede publicação acidental no registro npm e não restringe o repositório público ou a licença MIT.
+O script atual gera uma pasta portátil x64, sem instalador, assinatura digital ou atualização automática. `npm run package` substitui a saída anterior em `dist/v0.8`; mantenha qualquer cópia que deseje preservar fora dessa pasta. O código publicado no Git não inclui `dist/`, `node_modules/`, ferramentas de análise locais ou resultados de testes: a pasta com o executável só existe depois da geração local. O campo `private` no `package.json` impede publicação acidental no registro npm e não restringe o repositório público ou a licença MIT.
 
 ## Verificar a instalação e a geração
 
@@ -96,7 +96,15 @@ O aplicativo mantém biblioteca, preferências e estudo em `%APPDATA%\PianoCraft
 
 Para relatar um problema ou propor uma melhoria, abra uma [issue](https://github.com/G4-R4M0S-Dev/PianoCraft/issues) informando a versão, Windows, teclado/driver quando aplicável, passos para reproduzir e o resultado esperado. Antes de enviar uma contribuição, execute os testes relevantes. Compartilhe arquivos de exemplo somente quando tiver autorização para distribuí-los.
 
-## Novidades da versão 0.7
+## Novidades da versão 0.8
+
+- **Música inteira como ação principal:** **Praticar música inteira** prepara a execução do início ao fim, sem repetição automática nem avisos de conclusão entre frases. Um loop ou uma tarefa antiga não muda esse escopo. Os nove percursos também abrem a música inteira com o modo e as mãos escolhidos.
+- **Trechos por escolha explícita:** **Estudo por trechos · opcional** mostra intervalo, velocidade e quantidade de execuções. **Estudar este trecho** ou **Continuar este trecho** inicia esse treino guiado. No estúdio, o escopo e a repetição ficam visíveis; **Música inteira** sai do trecho e desliga suas repetições.
+- **Velocidade fácil de ajustar e preservar:** a barra de prática mantém o campo numérico, o controle deslizante, os atalhos **75%** e **100%** e os botões **−/+**, que mudam cinco pontos percentuais. A escolha de 20% a 150% fica salva por música e perfil, inclusive após fechar o aplicativo, e também é respeitada ao entrar em um trecho guiado.
+- **Seu andamento orienta a jornada:** depois de uma escolha manual de velocidade, atingir a meta pode avançar a mão, o trecho ou o modo sem aumentar o andamento automaticamente. Recital continua em 100%, mas preserva a preferência para quando você voltar a outro modo.
+- **Biblioteca compacta:** as músicas aparecem em linhas, com título, duração e informações de estudo, mantendo busca, ordenação, favoritos e acesso às ações da música.
+
+## Histórico da versão 0.7
 
 - **Um próximo passo por música:** abrir uma música mostra seu progresso, a tarefa recomendada e **Começar** ou **Continuar**. A missão informa o trecho, a mão, o modo, o andamento e a meta antes da prática.
 - **Meta clara:** faça três execuções seguidas com pelo menos 90% de precisão. Durante o treino, a missão mostra a sequência atual. Ao terminar, o resultado informa se a meta foi atingida e oferece uma próxima ação concreta, como aumentar o andamento, trocar a mão ou consolidar o trecho.
@@ -129,7 +137,7 @@ O mapa de erros usa a posição, a nota e o tipo de erro registrados nas novas p
 
 ## Estrutura musical e estudo
 
-Abra o MIDI completo para receber uma primeira sugestão de estudo. Em **Estrutura e padrões**, use **Analisar padrões da música** para examinar e revisar a divisão. A quantidade de frases depende dos retornos, pausas e desenhos melódicos do arquivo. Não existe uma regra de onze partes, nem cortes iguais em segundos.
+Abra a música e use **Praticar música inteira** para tocar do início ao fim. Se quiser estudar partes, escolha a sugestão em **Estudo por trechos · opcional**. Em **Estrutura e padrões**, use **Analisar padrões da música** para examinar e revisar a divisão. A quantidade de frases depende dos retornos, pausas e desenhos melódicos do arquivo. Não existe uma regra de onze partes, nem cortes iguais em segundos.
 
 - O mapa **A, B, A′…** mostra famílias, reaparições exatas, transposições e pequenas variações, com os tempos reais e uma comparação com a primeira ocorrência.
 - Ouça a base e o retorno, escolha a pista melódica e revise os agrupamentos. Em **Revisar limites das frases**, ajuste cortes, una ou divida trechos; depois salve a revisão.
@@ -147,15 +155,15 @@ A análise é local e revisável, baseada em alturas, intervalos e ritmo. Não u
 - **Modo foco** esconde a navegação e amplia a partitura e o teclado. Use o botão ou **F10**; **Esc** sai do foco. **F11** continua alternando tela cheia.
 - O perfil LK-S250 envia o comando de iluminação quando a posição musical chega à nota. Não há antecipação; a velocidade e a espera do modo Melodia são respeitadas. A resposta dos LEDs precisa ser conferida no instrumento.
 
-Para praticar por frases, salve a estrutura e use a barra de frases para escolher um trecho, repetir em loop e avançar para o próximo. **Música inteira** sai desse treino. A revisão de limites também oferece quantidade ou compassos como opções manuais, quando você desejar impor esses cortes.
+Para praticar por frases, salve a estrutura e use a barra de frases para escolher um trecho. Confira o intervalo e a repetição indicados na tela; você pode repetir em loop ou fazer uma passagem única. **Música inteira** sai desse treino, restaura o intervalo completo e desliga a repetição. A revisão de limites também oferece quantidade ou compassos como opções manuais, quando você desejar impor esses cortes.
 
 As sugestões consideram o mapa de andamento, compassos, pausas melódicas, padrões e marcadores; a revisão permite ajustar o fraseado à música. O MIDI permanece inteiro, sem duplicar arquivos ou alterar suas notas. As frases ficam na biblioteca e no backup JSON; a exportação MIDI inclui a música inteira, sem recortá-la pelas frases e com as limitações de conservação de eventos descritas acima. Veja [o guia de frases](docs/phrases.md).
 
 ## Usar
 
 1. Abra um dos três exercícios autorais ou importe MIDI, MusicXML/XML e MXL. Também é possível arrastar arquivos e importar uma pasta.
-2. Abra uma música e escolha **Começar** ou **Continuar** para praticar a tarefa sugerida. Ao terminar, escolha o próximo passo ou repita. Melodia espera as notas corretas; Ritmo segue o relógio; Recital mantém 100% de velocidade e desabilita busca e loops.
-3. Para configurar sua própria prática, abra **Estúdio completo**: escolha modo e mãos, ajuste andamento/transposição, ative o metrônomo e marque pontos A/B para repetir um trecho.
+2. Abra uma música e escolha **Praticar música inteira**. A tela prepara a música completa, sem iniciar nem repetir automaticamente; pressione **Espaço** ou o botão de reprodução para começar. Melodia espera as notas corretas; Ritmo segue o relógio; Recital mantém 100% de velocidade e desabilita busca e loops.
+3. Ajuste **Velocidade** na barra visível: digite a porcentagem, use o controle deslizante, **−/+** ou **75%/100%**. A escolha fica salva para aquela música e perfil. Para repetir uma parte com meta, volte à página da música e escolha **Estudar este trecho** ou **Continuar este trecho**. Para configurar pistas, transposição, metrônomo ou pontos A/B, abra **Estúdio completo**. Confira sempre o escopo e a repetição mostrados acima da partitura; **Música inteira** encerra o treino por trecho.
 4. Expanda **Pistas e acompanhamento** para selecionar partes, mãos, cores e instrumentos. Em **Editar notas**, atribua mãos e dedos às notas.
 5. A faixa **Instrumento** mostra a entrada física, o estado real da abertura e cada nota/pedal recebido. O CASIO conecta automaticamente; a seleção fica salva e pode ser alterada nessa faixa. **Instrumento e luzes** configura separadamente a saída de áudio e a iluminação. O perfil específico **CASIO LK-S250** usa mensagens de iluminação próprias, sem tocar as notas de áudio. O botão **Testar luzes** envia comandos de Dó–Mi–Sol por 0,8 s para conferir a iluminação no instrumento.
 6. Em **Piano livre**, toque com mouse, teclado ou MIDI, reconheça acordes e grave. Salve a gravação na biblioteca para ouvir, estudar e exportar MIDI.
@@ -165,7 +173,7 @@ No teclado do computador: **A W S E D F T G Y H U J K O L P** tocam notas; **Z/X
 
 Na versão 0.2, um acorde só pontua quando todas as alturas estão pressionadas juntas e seus ataques ocorrem dentro de **120 ms reais**. Tocar as notas separadamente enquanto a música aguarda não acumula acertos. A interface permite 80/120/180 ms e informa tentativa expirada, nota fora de tempo ou soltura antecipada. O pedal não transforma notas já soltas em um acorde válido. Consulte as [regras de avaliação](docs/practice-rules.md).
 
-O perfil é alterado nas configurações e filtra os resultados. Os dados ficam em `%APPDATA%\PianoCraft Studio`: biblioteca, histórico detalhado, conquistas, jornada de estudo, checklists, rascunhos e SoundFont no IndexedDB; preferências e um cache compacto do histórico no armazenamento local. A versão 0.7 lê o histórico antigo automaticamente. No fechamento normal, o aplicativo aguarda o salvamento. Exporte o projeto para fazer cópias independentes; bancos SoundFont são preservados no computador e podem ser copiados separadamente.
+O perfil é alterado nas configurações e filtra os resultados. Os dados ficam em `%APPDATA%\PianoCraft Studio`: biblioteca, histórico detalhado, conquistas, jornada de estudo, checklists, rascunhos e SoundFont no IndexedDB; preferências de prática por música/perfil e um cache compacto do histórico no armazenamento local. A versão 0.8 mantém a leitura do histórico antigo. No fechamento normal, o aplicativo aguarda o salvamento. Exporte o projeto para fazer cópias independentes; bancos SoundFont são preservados no computador e podem ser copiados separadamente.
 
 ## Análise solicitada com REA
 

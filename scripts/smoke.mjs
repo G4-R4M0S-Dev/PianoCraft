@@ -20,6 +20,7 @@ try {
   await page.locator('[data-hub-action="onManual"]').click();
   await page.locator('#close-practice-tools').click();
   await page.waitForSelector('#studio-view:not(.hidden)');
+  await page.locator('#mode').selectOption('listen');
   assert.equal(await page.locator('.piano-key').count(),61);
   await page.locator('#play').click();
   console.log('SMOKE: reprodução solicitada');

@@ -1,10 +1,12 @@
 # Estrutura musical e prática por frases
 
-O PianoCraft mantém o MIDI inteiro e guarda trechos de estudo dentro da música. O fluxo principal é reconhecer padrões melódicos, suas reaparições e pequenas variações. A quantidade de frases depende dos indícios encontrados em cada arranjo; não existe uma quantidade fixa nem uma duração padrão de frase.
+O PianoCraft mantém o MIDI inteiro e guarda trechos opcionais de estudo dentro da música. Na versão 0.8, o botão principal **Praticar música inteira** prepara a execução do início ao fim, sem loops automáticos ou interrupções entre frases. Para treinar partes, escolha **Estudar este trecho** ou **Continuar este trecho** em **Estudo por trechos · opcional**, ou selecione uma frase no estúdio. Confira o intervalo e a quantidade de execuções antes de começar. **Música inteira** sai desse treino e desliga a repetição.
+
+A análise opcional reconhece padrões melódicos, suas reaparições e pequenas variações. A quantidade de frases depende dos indícios encontrados em cada arranjo; não existe uma quantidade fixa nem uma duração padrão de frase. A existência de frases salvas ou sugeridas não obriga a praticá-las ao escolher a música inteira.
 
 ## Analisar, comparar e revisar
 
-Abra **Estrutura e estudo** e escolha **Analisar padrões da música**. É possível deixar a escolha da pista melódica automática ou selecionar outra pista. O mapa mostra a ordem das famílias ao longo da música: a mesma letra identifica uma família, o símbolo `′` marca uma variação e uma reaparição transposta pode conservar o desenho em outro registro. Uma família com uma única ocorrência continua disponível para estudo e não é apresentada como repetição confirmada.
+Na página da música, abra **Estrutura e padrões** e escolha **Analisar padrões da música**. É possível deixar a escolha da pista melódica automática ou selecionar outra pista. O mapa mostra a ordem das famílias ao longo da música: a mesma letra identifica uma família, o símbolo `′` marca uma variação e uma reaparição transposta pode conservar o desenho em outro registro. Uma família com uma única ocorrência continua disponível para estudo e não é apresentada como repetição confirmada.
 
 Selecione um trecho para ouvir sua referência, comparar as mudanças de notas, ritmo ou registro e praticá-lo diretamente. Se o agrupamento não fizer sentido musicalmente, atribua o trecho a outra família, crie uma família ou renomeie a família. **Salvar estrutura revisada** aplica o mapa à música e atualiza os exercícios. O rascunho pode ser fechado sem substituir o mapa salvo.
 
@@ -57,6 +59,8 @@ As operações puras de revisão em `src/music/phrases.js` continuam retornando 
 O **Plano e exercícios** usa as famílias da música e o histórico do perfil atual. Propõe reconhecer o desenho, praticar mãos separadas e juntas, manter o ritmo, comparar a base com uma variação, ligar trechos e começar de pontos diferentes. A atividade de memória pode esconder os apoios visuais. As sete sessões são sugestões ajustáveis de estudo, sem datas ou lembretes automáticos.
 
 Cada exercício contém `start` e `end` reais da música, configuração de mãos, modo, andamento e quantidade de repetições. Comparações guardam o intervalo da referência; desafios guardam os intervalos e famílias dos pontos de partida. Assim, é possível começar uma frase posterior diretamente ou treinar a transição entre duas frases sem gerar outro arquivo MIDI. Durante a prática, o intervalo selecionado limita a execução inclusive em Recital.
+
+A barra de prática informa o escopo e o estado da repetição. Desligar a repetição faz uma passagem pelo intervalo escolhido; **Música inteira** restaura os limites completos e remove a meta do trecho. A velocidade ajustada manualmente fica salva por música e perfil e é respeitada pela jornada guiada; Recital exige 100% sem apagar essa escolha. Veja [a jornada de estudo](learning-journey.md) para as regras de meta e avanço.
 
 As marcações **Revisei este exercício** e de sessão concluída são relatos do usuário, separados dos resultados ao tocar. Os estados **não avaliado**, **em estudo** e **consolidando** não declaram domínio automático. A referência inicial de consistência exige tentativas completas recentes em Ritmo ou Recital, arranjo completo, ambas as mãos, sem transposição, com andamento registrado de pelo menos 90% e precisão de pelo menos 90%. Históricos antigos sem os campos necessários não recebem essa qualificação. Mudanças no andamento ou na transposição durante a tentativa invalidam sua utilização para esse critério. Veja os detalhes em [study-plan.md](study-plan.md).
 

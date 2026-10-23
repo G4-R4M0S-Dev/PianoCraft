@@ -2,7 +2,23 @@
 
 Verificações da implementação por testes lógicos, pelo DOM/Web Audio reais do Electron e pelo executável Windows empacotado.
 
-## Preparação para publicação pública — 23/10/2026
+## Versão 0.8 — 23/10/2026
+
+Validação da fonte e do executável `dist/v0.8/PianoCraft-win32-x64/PianoCraft.exe`, versão 0.8.0. Os ensaios de simplicidade usam perfil temporário e MIDI simulado, sem enviar comandos ao instrumento físico.
+
+| Ensaio | Resultado |
+| --- | --- |
+| `npm test` final | **301 testes aprovados, zero falhas**, sem testes ignorados |
+| Preferências e jornada | **31 testes direcionados aprovados**, incluindo quatro novos testes de preferência por música/perfil, dados inválidos, avanço sem alterar velocidade manual e velocidades de 20% a 150% |
+| `qa-simple-practice.mjs` | **Fonte e EXE: nove cenários aprovados**; música inteira sem repetição; 100% após nova prática e recarga; isolamento por música/perfil; Recital a 100% preserva 87%; 125% respeitados no guiado; trecho só por escolha explícita; música atravessa frases sem resultados intermediários; prévia posterior restaura o trecho anterior; missão ativa cabe nos temas claro/escuro e modo foco |
+| Layout da prática | Fonte e EXE: seis combinações de 1440×960/1000×720, incluindo missão guiada em claro/escuro com foco ligado/desligado; controles e transporte dentro da janela |
+| `qa-song-hub.mjs` | Ação principal de música inteira, trecho secundário, nove percursos, callbacks, foco, texto seguro e temas claro/escuro nas duas resoluções |
+| `npm run test:app` | Fluxo de uso aprovado na fonte, sem erros de página |
+| `npm run package` e `check-package.mjs` | Pacote Windows x64 0.8.0 gerado e aprovado; biblioteca, reprodução, MXL/SVG e áudio SF2 reais, sem `node_modules`, erros de página ou requisições externas no ensaio |
+
+Evidências locais: `test-results/qa-simple-practice-source.json`, `qa-simple-practice-package.json`, capturas `simple-practice-*`, logs e `package-result.json`. A identidade do pacote está em `docs/evidence/pianocraft-v0.8.0-build.json`. MIDI simulado não certifica latência, execução musical humana ou resposta física de LEDs.
+
+## Histórico da publicação pública 0.7 — 23/10/2026
 
 Validada uma cópia limpa contendo apenas os arquivos publicáveis, sem reutilizar `node_modules`, `dist`, ferramentas locais ou a biblioteca pessoal. Ambiente: Windows 11 x64, Node.js 22.14.0, npm 11.4.2 e Electron 45.0.0.
 
